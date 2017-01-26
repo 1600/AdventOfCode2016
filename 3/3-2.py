@@ -19,8 +19,8 @@ with open('input.txt','r') as f:
         temp.append(c)
 
     for i in xrange(3):
-        a = [row[i] for row in temp]
-        for i in xrange(0,len(a),3):
+        a = [row[i] for row in temp]    # extract columns as lists
+        for i in xrange(0,len(a),3):    # determine if a trio is triangle
             print a[i],a[i+1],a[i+2]
             if isTriangle(a[i],a[i+1],a[i+2]):
                 triangle_num+=1
