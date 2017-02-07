@@ -3,10 +3,10 @@ extern crate md5;
 
 
 macro_rules! has_5_consec_zeroes {
-    // `()` indicates that the macro takes no argument.
+    // https://doc.rust-lang.org/beta/book/macros.html
     ($a : expr) => (
-        // The macro will expand into the contents of this block.
-        ($a.chars().nth(1).unwrap()==char::from_digit(0, 10).unwrap())&&
+        // 以下为宏展开内容.
+        ($a.chars().nth(1).unwrap()==char::from_digit(0, 10).unwrap())&&  //
         ($a.chars().nth(2).unwrap()==char::from_digit(0, 10).unwrap())&&
         ($a.chars().nth(3).unwrap()==char::from_digit(0, 10).unwrap())&&
         ($a.chars().nth(4).unwrap()==char::from_digit(0, 10).unwrap())&&
@@ -17,7 +17,7 @@ macro_rules! has_5_consec_zeroes {
 
 
 fn has_5_consec_zeroes( s: &str ) -> bool {          // remember the "-> bool" part,otherwise it returns default ();
-    let zero = char::from_digit(0, 10).unwrap();
+    let zero = char::from_digit(0, 10).unwrap();     // convert digit to char. https://doc.rust-lang.org/std/char/fn.from_digit.html
 
     if (s.chars().nth(0).unwrap()==zero)&&
         (s.chars().nth(1).unwrap()==zero)&&
@@ -39,8 +39,8 @@ fn main() {
         let mut arr = String::from("");
         while true {
 
-            let a = format!("{}{}",seed,index);
-            println!("Index >> {}", &index);
+            let a = format!("{}{}",seed,index);     //concatenate strings
+            println!("Index >> {}", &index);        
             index += 1;
             let digest = format!("{:x}", md5::compute(a));  // type(digest)>> &str
             //let digest = stringify!(md5::compute(a));     //don't use stringify!. 
