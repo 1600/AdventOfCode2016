@@ -1,0 +1,14 @@
+[root]
+name = "miner"
+version = "0.1.0"
+dependencies = [
+ "md5 0.3.3 (registry+https://mirrors.ustc.edu.cn/crates.io-index/)",
+]
+
+[[package]]
+name = "md5"
+version = "0.3.3"
+source = "registry+https://mirrors.ustc.edu.cn/crates.io-index/"
+
+[metadata]
+"checksum md5 0.3.3 (registry+https://mirrors.ustc.edu.cn/crates.io-index/)" = "15956cea30df18e33e057755ef83f072eff7814ef8da051223de0d3b7fa8b347"
