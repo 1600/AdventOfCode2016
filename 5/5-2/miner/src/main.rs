@@ -1,9 +1,6 @@
 #![feature(range_contains)]
-
 use std::char;
 extern crate md5;
-use std::io;
-use std::io::prelude::*;
 
 
 fn has_5_consec_zeroes(s: &str) -> bool {
@@ -30,6 +27,11 @@ fn main() {
         let mut temp_vector = Vec::new();                   // temporary vector to place character to push like [(pos1, char1), (pos2, char2)]
         let mut times_added : i32 = 1;                      
         let mut inserted_indices : Vec<u32> = Vec::new();
+        
+        
+        fn is_in_inserted( index: u32 , indices : &Vec<u32>) -> bool {
+            indices.iter().find(|&&x| x == index) == Some(&index)
+        }
 
         while times_added <= 8 {                            // only adds 8 chars
             let a = format!("{}{}", seed, index);           //concatenate strings to be calculated by md5
@@ -42,7 +44,9 @@ fn main() {
                 let pos = chars.nth(5).unwrap();
                 if pos.is_digit(10) {
                     let valid_pos : u32 = pos.to_digit(10).unwrap();
-                    if (0..8).contains(valid_pos) && !(inserted_indices.iter().find(|&&x| x == valid_pos) == Some(&valid_pos)) {
+
+                    
+                    if (0..8).contains(valid_pos) && !is_in_inserted(valid_pos, &inserted_indices) {
                         inserted_indices.push(valid_pos);
                         println!("[i] current filled {} chars.", times_added);
                         let char_to_insert : char= chars.nth(0).unwrap();                   // because digest already has first 5+1 elements sliced by nth(5)
@@ -53,23 +57,15 @@ fn main() {
                     }
                 }
             }
+        
         println!("temp vec >> {:?}",temp_vector);
-        let mut pos = 0;
-        while pos < temp_vector.len() {
-            println!("round {}",pos);
-            for i in &temp_vector {
-                if i.0 as usize == pos {
-                    result_string.insert(pos , i.1);
-                    println!("inserting {}, now vec is {:?}",i.1, result_string);
-                    pos += 1;
-                    break
-                }
-            }
+        //[(6, 'a'), (7, 'b'), (5, '1'), (0, '8'), (3, '5'), (1, 'c'), (4, 'd'), (2, '3')]
+        temp_vector.sort_by_key(|k| k.0);
+        for i in &temp_vector {
+            result_string.insert(i.0 as usize, i.1);
         }
-
         println!("end result >> {:?}",result_string );
     }
-    
     mining()
 }
 
